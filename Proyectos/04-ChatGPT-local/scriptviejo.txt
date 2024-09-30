@@ -1,0 +1,76 @@
+        const engine = await CreateWebWorkerMLCEngine(
+            new Worker('/worker.js', {type: 'module'}),
+            SELECTED_MODEL,
+            {
+                initProgressCallback: (info) => {
+                    $info.textContent = `${info.text}%`
+                    if (info.progress === 1) {
+                        $button.removeAttribute('disabled')
+                    }
+                }
+            }
+        )
+
+        $form.addEventListener('submit', async (event) => {
+            event.preventDefault()
+            const messageText = $input.value.trim()
+
+            if (messageText !== '') {
+                //añadimos el mensaje en el dom
+                $input.value = ''
+            }
+
+            addMessage(messageText, 'user')
+            $button.setAttribute('disabled', '')
+
+
+            const userMessage = {
+                role: 'user',
+                content: messageText
+            }
+
+            messages.push(userMessage)
+
+            const chunks = await engine.chat.completions.create({
+                messages,
+                stream: true
+            })
+
+            let reply = ""
+
+            const $botMessage = addMessage("", 'bot')
+
+            for await (const chunk of chunks) {
+                const choice = chunk.choices[0]
+                const content = choice?.delta?.content ?? ""
+                reply += content
+                $botMessage.textContent = reply
+
+            }
+
+            $button.removeAttribute('disabled')
+            messages.push({
+                role: 'assistant',
+                content: reply
+            })
+        })
+
+        function addMessage (text, sender) {
+            //primero clonar el template
+            const clonedTemplate = $template.content.cloneNode(true)
+            const $newMessage = clonedTemplate.querySelector('.message')
+
+            const $who = $newMessage.querySelector('span')
+            const $text = $newMessage.querySelector('p')
+
+            $text.textContent = text
+            $who.textContent = sender === 'bot' ? 'GPT' : 'Tu'
+            $newMessage.classList.add(sender)
+
+            //actualizar el scroll para ir bajando
+
+            $messages.appendChild($newMessage)
+            $container.scrollTop = $container.scrollHeight
+
+            return $text
+        }

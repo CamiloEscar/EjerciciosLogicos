@@ -1,0 +1,86 @@
+<title>tinder swipe</title>
+<main>
+  <section>
+    <header>
+      <img src="./logo-tinder.webp" alt="tinder logo" />
+    </header>
+
+    <div class="cards"></div>
+
+    <footer>
+      <button aria-label=""></button>
+      <button aria-label=""></button>
+      <button aria-label=""></button>
+      <button aria-label=""></button>
+      <button aria-label=""></button>
+    </footer>
+  </section>
+</main>
+
+<style>
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+      sans-serif;
+    display: grid;
+    place-content: center;
+    min-height: 100vh;
+    overflow: hidden;
+    user-select: none;
+    background: #f0f0f0;
+  }
+
+  main {
+    background: url("./celu.webp") no-repeat;
+    background-size: contain;
+    width: 320px;
+    height: 640px;
+    display: flex;
+    filter: drop-shadow(0 0 1px red);
+  }
+
+  section {
+    width: 100%;
+    background: #f0f0f0;
+    border-radius: 32px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    padding: 16px 6 px;
+    margin: 24;
+  }
+
+  header {
+    display: flex;
+    justify-content: center;
+    & img {
+      width: 24px;
+      height: 24;
+    }
+  }
+
+  footer {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    padding: 0 24px;
+    justify-content: center;
+    align-items: center;
+
+    & button {
+      height: 32px;
+      width: 32px;
+      border-radius: 50%;
+      border: 1px solid #ccc;
+    }
+  }
+</style>
