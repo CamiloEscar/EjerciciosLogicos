@@ -1,0 +1,3 @@
+//promesa
+
+const aplicarDesc ()
