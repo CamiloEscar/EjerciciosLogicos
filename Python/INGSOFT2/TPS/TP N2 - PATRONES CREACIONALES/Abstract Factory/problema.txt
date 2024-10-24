@@ -1,0 +1,4 @@
+La situacion es la siguiente
+tenemos dos fabricas de SetUps una produce todos
+los productos del setup en negro y otra los
+produce en blanco.
